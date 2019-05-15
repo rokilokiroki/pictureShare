@@ -8,14 +8,14 @@ services:
     ports:
       - 1990:80
     volumes:
-      - ./www/laravel:/var/www:cached
+      - ./www:/var/www:cached
     container_name: nginx
 
   php:
     build:
       context: ./phpfpm
     volumes:
-      - ./www/laravel/pictureShare:/var/www:cached
+      - ./www:/var/www:cached
     depends_on:
       - mysql
     container_name: pictureShare
