@@ -1,3 +1,4 @@
+import { getCookieValue } from './util'
 
 window._ = require('lodash');
 
@@ -8,9 +9,9 @@ window._ = require('lodash');
  */
 
 try {
-    window.$ = window.jQuery = require('jquery');
+    // window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap-sass');
+    // require('bootstrap-sass');
 } catch (e) {}
 
 /**
@@ -22,6 +23,12 @@ try {
 window.axios = require('axios');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+window.axios.interceptors.request.use(config => {
+  config.headers['X-XSRF-TOKEN'] = getCookieValue('XSRF-TOKENX')
+
+  return config;
+})
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
